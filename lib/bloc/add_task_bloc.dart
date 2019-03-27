@@ -16,7 +16,7 @@ class AddTaskBloc implements BlocBase {
   Status lastPrioritySelection = Status.PRIORITY_4;
 
   AddTaskBloc() {
-    _loadProjects();
+    loadProjects();
     _loadLabels();
     updateDueDate(DateTime.now().millisecondsSinceEpoch);
     _projectSelection.add(ProjectModel.getInbox());
@@ -62,7 +62,7 @@ class AddTaskBloc implements BlocBase {
     _dueDateSelected.close();
   }
 
-  void _loadProjects() {
+  void loadProjects() {
     _projectDB.getProjects(isInboxVisible: true).then((projects) {
       _projectController.add(List.unmodifiable(projects));
     });

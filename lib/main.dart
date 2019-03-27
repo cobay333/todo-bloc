@@ -6,6 +6,7 @@ import 'package:todo_bloc/bloc/add_task_bloc.dart';
 
 import 'package:todo_bloc/features/home/home.dart';
 import 'package:todo_bloc/bloc/app_provider.dart';
+import 'package:todo_bloc/bloc/project_bloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
     return AppProvider(
         homeBloc: HomeBloc(),
         taskBloc: TaskBloc(),
-        addTasklBloc: AddTaskBloc(),
+        addTaskBloc: AddTaskBloc(),
+        projectBloc: ProjectBloc(),
         child: MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(

@@ -5,6 +5,11 @@ import 'package:todo_bloc/models/project_model.dart';
 import 'package:todo_bloc/models/filter_model.dart';
 import 'package:todo_bloc/features/about/about_screen.dart';
 import 'package:todo_bloc/bloc/task_bloc.dart';
+import 'package:todo_bloc/bloc/project_bloc.dart';
+import 'package:todo_bloc/features/project/project_screen.dart';
+import 'package:todo_bloc/bloc/bloc_provider.dart';
+
+import 'dart:async';
 
 class SideDrawer extends StatelessWidget {
   @override
@@ -68,10 +73,10 @@ class SideDrawer extends StatelessWidget {
             leading: Icon(Icons.calendar_today),
             title: Text("Next 7 Days"),
           ),
-//          BlocProvider(
-//            bloc: ProjectBloc(ProjectDB.get()),
-//            child: ProjectPage(),
-//          ),
+          BlocProvider(
+            bloc: ProjectBloc(),
+            child: ProjectScreen(),
+          ),
 //          BlocProvider(
 //            bloc: LabelBloc(LabelDB.get()),
 //            child: LabelPage(),

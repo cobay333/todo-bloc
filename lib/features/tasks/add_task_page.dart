@@ -19,7 +19,7 @@ class AddTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _createTaskBloc = BlocProvider.on(context).addTasklBloc;
+    _createTaskBloc = BlocProvider.on(context).addTaskBloc;
     TaskBloc taskBloc = BlocProvider.on(context).taskBloc;
     return Scaffold(
       key: _scaffoldState,

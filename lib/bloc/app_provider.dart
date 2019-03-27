@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:todo_bloc/bloc/home_bloc.dart';
 import 'package:todo_bloc/bloc/task_bloc.dart';
 import 'package:todo_bloc/bloc/add_task_bloc.dart';
-import 'package:todo_bloc/db/dao/label_dao.dart';
-import 'package:todo_bloc/db/dao/project_dao.dart';
-import 'package:todo_bloc/db/dao/task_dao.dart';
+import 'package:todo_bloc/bloc/project_bloc.dart';
 
 class AppProvider extends InheritedWidget {
   final HomeBloc homeBloc;
   final TaskBloc taskBloc;
-  final AddTaskBloc addTasklBloc;
+  final AddTaskBloc addTaskBloc;
+  final ProjectBloc projectBloc;
+
 //  final TaskDao taskDao = TaskDao.get();
 //  final LabelDB lableDao = LabelDB.get();
 //  final ProjectDB projectBloc = ProjectDB.get();
 
-  AppProvider({Key key, Widget child, this.homeBloc, this.taskBloc, this.addTasklBloc}) : super(key: key, child : child);
+  AppProvider({Key key, Widget child, this.homeBloc, this.taskBloc, this.addTaskBloc, this.projectBloc})
+      : super(key: key, child : child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
