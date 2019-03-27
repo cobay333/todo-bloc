@@ -10,12 +10,12 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 class AddTaskBloc implements BlocBase {
-  final TaskDao _taskDB;
-  final ProjectDB _projectDB;
-  final LabelDB _labelDB;
+  final TaskDao _taskDB = TaskDao.get();
+  final ProjectDB _projectDB = ProjectDB.get();
+  final LabelDB _labelDB = LabelDB.get();
   Status lastPrioritySelection = Status.PRIORITY_4;
 
-  AddTaskBloc(this._taskDB, this._projectDB, this._labelDB) {
+  AddTaskBloc() {
     _loadProjects();
     _loadLabels();
     updateDueDate(DateTime.now().millisecondsSinceEpoch);

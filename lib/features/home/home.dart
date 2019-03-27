@@ -8,13 +8,16 @@ import 'package:todo_bloc/bloc/bloc_provider.dart';
 import 'package:todo_bloc/features/tasks/task_page.dart';
 import 'package:todo_bloc/features/tasks/add_task_page.dart';
 import 'package:todo_bloc/bloc/add_task_bloc.dart';
+import 'package:todo_bloc/features/home/side_drawer.dart';
 
 class Home extends StatelessWidget {
-  final TaskBloc _taskBloc = TaskBloc(TaskDao.get());
+  TaskBloc _taskBloc;
 
   @override
   Widget build(BuildContext context) {
-    final HomeBloc homeBloc = BlocProvider.of(context);
+    final HomeBloc homeBloc = BlocProvider.on(context).homeBloc;
+
+    _taskBloc = BlocProvider.on(context).taskBloc;
     homeBloc.filter.listen((filter) {
       _taskBloc.updateFilters(filter);
     });
@@ -36,17 +39,17 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.orange,
         onPressed: () async {
           var blocProviderAddTask = BlocProvider(
-            bloc: AddTaskBloc(TaskDao.get(), ProjectDB.get(), LabelDB.get()),
+            bloc: AddTaskBloc(),
             child: AddTaskScreen(),
           );
           await Navigator.push(
             context,
             MaterialPageRoute<bool>(builder: (context) => blocProviderAddTask),
           );
-          _taskBloc.refresh();
+//          _taskBloc.refresh();
         },
       ),
-//      drawer: SideDrawer(),
+      drawer: SideDrawer(),
       body: BlocProvider(
         bloc: _taskBloc,
         child: TasksPage(),

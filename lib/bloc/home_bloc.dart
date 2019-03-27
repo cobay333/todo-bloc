@@ -1,7 +1,6 @@
 import 'bloc_provider.dart';
 import 'dart:async';
 import 'package:todo_bloc/models/filter_model.dart';
-import 'task_bloc.dart';
 
 class HomeBloc implements BlocBase {
   StreamController<String> _titleController = StreamController<String>.broadcast();

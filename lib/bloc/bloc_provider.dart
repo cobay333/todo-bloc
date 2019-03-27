@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_provider.dart';
 
 abstract class BlocBase {
   void dispose();
@@ -23,6 +24,10 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
     return provider.bloc;
   }
 
+  static AppProvider on<T extends BlocBase>(BuildContext context) {
+    return AppProvider.of(context);
+  }
+
   static Type _typeOf<T>() => T;
 }
 class _BlocProviderState<T> extends State<BlocProvider<BlocBase>> {
@@ -36,4 +41,5 @@ class _BlocProviderState<T> extends State<BlocProvider<BlocBase>> {
     widget.bloc.dispose();
     super.dispose();
   }
+
 }

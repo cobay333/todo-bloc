@@ -13,11 +13,11 @@ class TaskBloc implements BlocBase{
   Stream<List<TaskModel>> get tasks => _taskController.stream;
 
   StreamController<int> _cmdController = StreamController<int>.broadcast();
-  TaskDao _taskDao;
+  TaskDao _taskDao = TaskDao.get();
   List<TaskModel> _tasksList;
   Filter _lastFilterStatus;
 
-  TaskBloc(this._taskDao) {
+  TaskBloc() {
     filterTodayTasks();
     _cmdController.stream.listen((_) {
       _updateTaskStream(_tasksList);

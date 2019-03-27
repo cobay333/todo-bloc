@@ -9,6 +9,7 @@ import 'package:todo_bloc/models/priority.dart';
 import 'package:todo_bloc/utils/date_util.dart';
 import 'package:todo_bloc/utils/app_utils.dart';
 import 'package:todo_bloc/utils/color_utils.dart';
+import 'package:todo_bloc/bloc/task_bloc.dart';
 
 class AddTaskScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldState =
@@ -17,7 +18,8 @@ class AddTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AddTaskBloc createTaskBloc = BlocProvider.of(context);
+    AddTaskBloc createTaskBloc = BlocProvider.on(context).addTasklBloc;
+    TaskBloc taskBloc = BlocProvider.on(context).taskBloc;
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -115,6 +117,7 @@ class AddTaskScreen extends StatelessWidget {
             if (_formState.currentState.validate()) {
               _formState.currentState.save();
               createTaskBloc.createTask().listen((value) {
+                taskBloc.refresh();
                 Navigator.pop(context, true);
               });
             }

@@ -8,7 +8,7 @@ import '../tasks/row_task.dart';
 class TasksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final TaskBloc _tasksBloc = BlocProvider.of(context);
+    final TaskBloc _tasksBloc = BlocProvider.on(context).taskBloc;
     return StreamBuilder<List<TaskModel>>(
       stream: _tasksBloc.tasks,
       builder: (context, snapshot) {
