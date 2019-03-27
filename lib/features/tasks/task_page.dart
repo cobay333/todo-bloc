@@ -6,9 +6,10 @@ import 'package:todo_bloc/utils/app_utils.dart';
 import '../tasks/row_task.dart';
 
 class TasksPage extends StatelessWidget {
+  TaskBloc _tasksBloc;
   @override
   Widget build(BuildContext context) {
-    final TaskBloc _tasksBloc = BlocProvider.on(context).taskBloc;
+    _tasksBloc = BlocProvider.on(context).taskBloc;
     return StreamBuilder<List<TaskModel>>(
       stream: _tasksBloc.tasks,
       builder: (context, snapshot) {
@@ -35,8 +36,7 @@ class TasksPage extends StatelessWidget {
                   key: ObjectKey(list[index]),
                   onDismissed: (DismissDirection direction) {
                     var taskID = list[index].id;
-                    final TaskBloc _tasksBloc =
-                    BlocProvider.of<TaskBloc>(context);
+
                     String message = "";
                     if (direction == DismissDirection.endToStart) {
                       _tasksBloc.updateStatus(

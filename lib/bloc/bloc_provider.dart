@@ -18,17 +18,17 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
     return _BlocProviderState<T>();
   }
 
-  static T of<T extends BlocBase>(BuildContext context) {
-    final type = _typeOf<BlocProvider<T>>();
-    BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
-    return provider.bloc;
-  }
+//  static T of<T extends BlocBase>(BuildContext context) {
+//    final type = _typeOf<BlocProvider<T>>();
+//    BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
+//    return provider.bloc;
+//  }
 
   static AppProvider on<T extends BlocBase>(BuildContext context) {
     return AppProvider.of(context);
   }
 
-  static Type _typeOf<T>() => T;
+//  static Type _typeOf<T>() => T;
 }
 class _BlocProviderState<T> extends State<BlocProvider<BlocBase>> {
   @override

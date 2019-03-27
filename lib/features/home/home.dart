@@ -18,9 +18,7 @@ class Home extends StatelessWidget {
     final HomeBloc homeBloc = BlocProvider.on(context).homeBloc;
 
     _taskBloc = BlocProvider.on(context).taskBloc;
-    homeBloc.filter.listen((filter) {
-      _taskBloc.updateFilters(filter);
-    });
+
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder<String>(
@@ -46,7 +44,6 @@ class Home extends StatelessWidget {
             context,
             MaterialPageRoute<bool>(builder: (context) => blocProviderAddTask),
           );
-//          _taskBloc.refresh();
         },
       ),
       drawer: SideDrawer(),

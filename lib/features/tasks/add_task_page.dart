@@ -15,10 +15,11 @@ class AddTaskScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldState =
   GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
+  AddTaskBloc _createTaskBloc;
 
   @override
   Widget build(BuildContext context) {
-    AddTaskBloc createTaskBloc = BlocProvider.on(context).addTasklBloc;
+    _createTaskBloc = BlocProvider.on(context).addTasklBloc;
     TaskBloc taskBloc = BlocProvider.on(context).taskBloc;
     return Scaffold(
       key: _scaffoldState,
@@ -36,7 +37,7 @@ class AddTaskScreen extends StatelessWidget {
                     return msg;
                   },
                   onSaved: (value) {
-                    createTaskBloc.updateTitle = value;
+                    _createTaskBloc.updateTitle = value;
                   },
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
@@ -48,19 +49,19 @@ class AddTaskScreen extends StatelessWidget {
             leading: Icon(Icons.book),
             title: Text("Project"),
             subtitle: StreamBuilder<ProjectModel>(
-              stream: createTaskBloc.selectedProject,
+              stream: _createTaskBloc.selectedProject,
               initialData: ProjectModel.getInbox(),
               builder: (context, snapshot) => Text(snapshot.data.name),
             ),
             onTap: () {
-              _showProjectsDialog(createTaskBloc, context);
+              _showProjectsDialog(_createTaskBloc, context);
             },
           ),
           ListTile(
             leading: Icon(Icons.calendar_today),
             title: Text("Due Date"),
             subtitle: StreamBuilder(
-              stream: createTaskBloc.dueDateSelected,
+              stream: _createTaskBloc.dueDateSelected,
               initialData: DateTime.now().millisecondsSinceEpoch,
               builder: (context, snapshot) =>
                   Text(getFormattedDate(snapshot.data)),
@@ -73,20 +74,20 @@ class AddTaskScreen extends StatelessWidget {
             leading: Icon(Icons.flag),
             title: Text("Priority"),
             subtitle: StreamBuilder(
-              stream: createTaskBloc.prioritySelected,
+              stream: _createTaskBloc.prioritySelected,
               initialData: Status.PRIORITY_4,
               builder: (context, snapshot) =>
                   Text(priorityText[snapshot.data.index]),
             ),
             onTap: () {
-              _showPriorityDialog(createTaskBloc, context);
+              _showPriorityDialog(_createTaskBloc, context);
             },
           ),
           ListTile(
               leading: Icon(Icons.label),
               title: Text("Lables"),
               subtitle: StreamBuilder(
-                stream: createTaskBloc.labelSelection,
+                stream: _createTaskBloc.labelSelection,
                 initialData: "No Labels",
                 builder: (context, snapshot) => Text(snapshot.data),
               ),
@@ -116,7 +117,7 @@ class AddTaskScreen extends StatelessWidget {
           onPressed: () {
             if (_formState.currentState.validate()) {
               _formState.currentState.save();
-              createTaskBloc.createTask().listen((value) {
+              _createTaskBloc.createTask().listen((value) {
                 taskBloc.refresh();
                 Navigator.pop(context, true);
               });
@@ -126,14 +127,13 @@ class AddTaskScreen extends StatelessWidget {
   }
 
   Future<Null> _selectDate(BuildContext context) async {
-    AddTaskBloc createTaskBloc = BlocProvider.of(context);
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
     if (picked != null) {
-      createTaskBloc.updateDueDate(picked.millisecondsSinceEpoch);
+      _createTaskBloc.updateDueDate(picked.millisecondsSinceEpoch);
     }
   }
 
@@ -173,17 +173,16 @@ class AddTaskScreen extends StatelessWidget {
   }
 
   Future<Status> _showLabelsDialog(BuildContext context) async {
-    AddTaskBloc createTaskBloc = BlocProvider.of(context);
     return showDialog<Status>(
         context: context,
         builder: (BuildContext context) {
           return StreamBuilder(
-              stream: createTaskBloc.labels,
+              stream: _createTaskBloc.labels,
               initialData: List<LabelModel>(),
               builder: (context, snapshot) {
                 return SimpleDialog(
                   title: const Text('Select Labels'),
-                  children: buildLabels(createTaskBloc, context, snapshot.data),
+                  children: buildLabels(_createTaskBloc, context, snapshot.data),
                 );
               });
         });
@@ -238,14 +237,13 @@ class AddTaskScreen extends StatelessWidget {
   }
 
   GestureDetector buildContainer(BuildContext context, Status status) {
-    AddTaskBloc createTaskBloc = BlocProvider.of(context);
     return GestureDetector(
         onTap: () {
-          createTaskBloc.updatePriority(status);
+          _createTaskBloc.updatePriority(status);
           Navigator.pop(context, status);
         },
         child: Container(
-            color: status == createTaskBloc.lastPrioritySelection
+            color: status == _createTaskBloc.lastPrioritySelection
                 ? Colors.grey
                 : Colors.white,
             child: Container(

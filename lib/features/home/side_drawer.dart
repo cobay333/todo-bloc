@@ -3,11 +3,14 @@ import 'package:todo_bloc/bloc/home_bloc.dart';
 import 'package:todo_bloc/bloc/bloc_provider.dart';
 import 'package:todo_bloc/models/project_model.dart';
 import 'package:todo_bloc/models/filter_model.dart';
+import 'package:todo_bloc/features/about/about_screen.dart';
+import 'package:todo_bloc/bloc/task_bloc.dart';
 
 class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    HomeBloc homeBloc = BlocProvider.of(context);
+    HomeBloc homeBloc = BlocProvider.on(context).homeBloc;
+    TaskBloc taskBloc = BlocProvider.on(context).taskBloc;
 
     return Drawer(
       child: ListView(
@@ -23,13 +26,13 @@ class SideDrawer extends StatelessWidget {
                     color: Colors.white,
                     size: 36.0,
                   ),
-//                  onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute<bool>(
-//                          builder: (context) => AboutUsScreen()),
-//                    );
-//                  }
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<bool>(
+                          builder: (context) => AboutUsScreen()),
+                    );
+                  }
                   )
             ],
             currentAccountPicture: CircleAvatar(
@@ -44,11 +47,14 @@ class SideDrawer extends StatelessWidget {
                 var project = ProjectModel.getInbox();
                 homeBloc.applyFilter(
                     project.name, Filter.byProject(project.id));
+                taskBloc.updateFilters(Filter.byProject(project.id));
+
                 Navigator.pop(context);
               }),
           ListTile(
               onTap: () {
                 homeBloc.applyFilter("Today", Filter.byToday());
+                taskBloc.updateFilters(Filter.byToday());
                 Navigator.pop(context);
               },
               leading: Icon(Icons.calendar_today),
@@ -56,6 +62,7 @@ class SideDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               homeBloc.applyFilter("Next 7 Days", Filter.byNextWeek());
+              taskBloc.updateFilters(Filter.byNextWeek());
               Navigator.pop(context);
             },
             leading: Icon(Icons.calendar_today),

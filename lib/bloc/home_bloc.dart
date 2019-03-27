@@ -6,13 +6,10 @@ class HomeBloc implements BlocBase {
   StreamController<String> _titleController = StreamController<String>.broadcast();
   Stream<String> get title => _titleController.stream;
 
-  StreamController<Filter> _filterController = StreamController<Filter>.broadcast();
-  Stream<Filter> get filter => _filterController.stream;
 
   @override
   void dispose() {
     _titleController.close();
-    _filterController.close();
   }
 
   void updateTitle(String title) {
@@ -20,7 +17,6 @@ class HomeBloc implements BlocBase {
   }
 
   void applyFilter(String title, Filter filter) {
-    _filterController.sink.add(filter);
     updateTitle(title);
   }
 }
