@@ -43,7 +43,7 @@ class SideDrawer extends StatelessWidget {
             ],
             currentAccountPicture: CircleAvatar(
               backgroundColor: Theme.of(context).accentColor,
-              backgroundImage: AssetImage("assets/twitter_logo.jpg"),
+              backgroundImage: AssetImage("assets/avatar.jpg"),
             ),
           ),
           ListTile(
