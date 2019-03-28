@@ -3,18 +3,21 @@ import 'package:todo_bloc/bloc/home_bloc.dart';
 import 'package:todo_bloc/bloc/task_bloc.dart';
 import 'package:todo_bloc/bloc/add_task_bloc.dart';
 import 'package:todo_bloc/bloc/project_bloc.dart';
+import 'package:todo_bloc/bloc/label_bloc.dart';
 
 class AppProvider extends InheritedWidget {
   final HomeBloc homeBloc;
   final TaskBloc taskBloc;
   final AddTaskBloc addTaskBloc;
   final ProjectBloc projectBloc;
+  final LabelBloc labelBloc;
 
 //  final TaskDao taskDao = TaskDao.get();
 //  final LabelDB lableDao = LabelDB.get();
 //  final ProjectDB projectBloc = ProjectDB.get();
 
-  AppProvider({Key key, Widget child, this.homeBloc, this.taskBloc, this.addTaskBloc, this.projectBloc})
+  AppProvider({Key key, Widget child, this.homeBloc, this.taskBloc, this.addTaskBloc,
+    this.projectBloc, this.labelBloc})
       : super(key: key, child : child);
 
   @override

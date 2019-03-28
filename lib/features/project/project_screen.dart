@@ -48,7 +48,7 @@ class ProjectExpansionTileWidget extends StatelessWidget {
       leading: Icon(Icons.add),
       title: Text("Add Project"),
       onTap: () async {
-        Navigator.pop(context);
+//        Navigator.pop(context);
         Widget addProject = BlocProvider(
           bloc: ProjectBloc(),
           child: AddProject(),

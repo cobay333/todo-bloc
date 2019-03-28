@@ -7,7 +7,8 @@ import 'package:todo_bloc/features/about/about_screen.dart';
 import 'package:todo_bloc/bloc/task_bloc.dart';
 import 'package:todo_bloc/bloc/project_bloc.dart';
 import 'package:todo_bloc/features/project/project_screen.dart';
-import 'package:todo_bloc/bloc/bloc_provider.dart';
+import 'package:todo_bloc/bloc/label_bloc.dart';
+import 'package:todo_bloc/features/label/label_screen.dart';
 
 import 'dart:async';
 
@@ -46,17 +47,6 @@ class SideDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-              leading: Icon(Icons.inbox),
-              title: Text("Inbox"),
-              onTap: () {
-                var project = ProjectModel.getInbox();
-                homeBloc.applyFilter(
-                    project.name, Filter.byProject(project.id));
-                taskBloc.updateFilters(Filter.byProject(project.id));
-
-                Navigator.pop(context);
-              }),
-          ListTile(
               onTap: () {
                 homeBloc.applyFilter("Today", Filter.byToday());
                 taskBloc.updateFilters(Filter.byToday());
@@ -77,10 +67,10 @@ class SideDrawer extends StatelessWidget {
             bloc: ProjectBloc(),
             child: ProjectScreen(),
           ),
-//          BlocProvider(
-//            bloc: LabelBloc(LabelDB.get()),
-//            child: LabelPage(),
-//          )
+          BlocProvider(
+            bloc: LabelBloc(),
+            child: LabelPage(),
+          )
         ],
       ),
     );

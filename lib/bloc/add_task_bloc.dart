@@ -17,7 +17,7 @@ class AddTaskBloc implements BlocBase {
 
   AddTaskBloc() {
     loadProjects();
-    _loadLabels();
+    loadLabels();
     updateDueDate(DateTime.now().millisecondsSinceEpoch);
     _projectSelection.add(ProjectModel.getInbox());
     _prioritySelected.add(lastPrioritySelection);
@@ -68,7 +68,7 @@ class AddTaskBloc implements BlocBase {
     });
   }
 
-  void _loadLabels() {
+  void loadLabels() {
     _labelDB.getLabels().then((labels) {
       _labelController.add(List.unmodifiable(labels));
     });

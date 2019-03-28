@@ -14,7 +14,7 @@ class ProjectBloc implements BlocBase {
   Stream<ColorPalette> get colorSelection => _colorController.stream;
 
   ProjectDB _projectDB = ProjectDB.get();
-  bool isInboxVisible = false;
+  bool isInboxVisible = true;
 
   ProjectBloc() {
     _loadProjects(isInboxVisible);
